@@ -1,0 +1,11 @@
+{
+  "name": "sirco-web-stats-generator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate": "node ./scripts/generate-stats.js"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.0.0"
+  }
+}

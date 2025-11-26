@@ -1,0 +1,64 @@
+# Create this file at: .github/workflows/generate-stats.yml
+name: Generate org statistics
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *' # run daily at 06:00 UTC (change as needed)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ORG_NAME: Sirco-web            # organization to fetch stats for
+      TARGET_BRANCH: gh-pages       # branch where generated files are pushed (change if you prefer)
+      OUTPUT_DIR: docs              # generated files output dir
+      INCLUDE_PRIVATE: "false"      # set to "true" to include private repos (requires PAT with repo scope)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run stats generator
+        env:
+          STATS_PAT: ${{ secrets.STATS_PAT }}   # set this secret (see instructions)
+          ORG_NAME: ${{ env.ORG_NAME }}
+          OUTPUT_DIR: ${{ env.OUTPUT_DIR }}
+          INCLUDE_PRIVATE: ${{ env.INCLUDE_PRIVATE }}
+        run: node ./scripts/generate-stats.js
+
+      - name: Configure git (for push)
+        run: |
+          git config user.name "Sirco Web Stats Bot"
+          git config user.email "noreply@sirco-web.local"
+
+      - name: Commit generated files
+        run: |
+          # Ensure target branch exists (create if missing)
+          git fetch origin $TARGET_BRANCH || true
+          if git ls-remote --exit-code --heads origin $TARGET_BRANCH; then
+            git checkout $TARGET_BRANCH
+            git pull origin $TARGET_BRANCH
+          else
+            git checkout --orphan $TARGET_BRANCH
+            git reset --hard
+          fi
+
+          # Copy (or ensure) generated files are present in working tree
+          git add $OUTPUT_DIR
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update org stats (generated)"
+            # Use PAT to push so the workflow can push to branch even if it's protected (if allowed)
+            git push "https://${{ secrets.STATS_PAT }}@github.com/${{ github.repository }}" $TARGET_BRANCH --force
+          fi

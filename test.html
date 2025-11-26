@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TikTok (Parody)</title>
+
+  <!-- Generic music-note favicon (NOT real TikTok favicon) -->
+  <link rel="icon" href="data:image/svg+xml,
+  %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E
+    %3Ccircle cx='50' cy='50' r='48' fill='%23000000'/%3E
+    %3Cpath d='M60 20 v35 a15 15 0 1 1-8-13 V22 Z'
+      fill='%23ff0050'/%3E
+  %3C/svg%3E">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #222 0, #000 55%);
+      color: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      text-align: center;
+      user-select: none;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.35;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .orb.orb1 {
+      width: 220px;
+      height: 220px;
+      background: #00f2ea;
+      top: -60px;
+      left: -40px;
+    }
+
+    .orb.orb2 {
+      width: 260px;
+      height: 260px;
+      background: #ff0050;
+      bottom: -80px;
+      right: -40px;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 480px;
+      padding: 20px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 40px);
+    }
+
+    /* Landing screen */
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .logo-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #00f2ea, #ff0050);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(0, 242, 234, 0.4);
+    }
+
+    .logo-icon span {
+      font-size: 30px;
+    }
+
+    .logo-text-main {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1;
+      text-align: left;
+    }
+
+    .logo-text-main span:nth-child(1) {
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+    }
+
+    .logo-text-main span:nth-child(2) {
+      color: #ff0050;
+      text-shadow: 0 0 16px rgba(255, 0, 80, 0.7);
+      margin-left: 4px;
+    }
+
+    .tagline {
+      font-size: 14px;
+      opacity: 0.75;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    #startButton {
+      font-size: 24px;
+      padding: 16px 40px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00f2ea, #ff0050);
+      color: #000;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+      transform: translateY(0);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    #startButton:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
+      filter: brightness(1.05);
+    }
+
+    #startButton:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.9);
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 13px;
+      opacity: 0.65;
+    }
+
+    .note span {
+      color: #00f2ea;
+    }
+
+    /* Loading screen */
+
+    .spinner {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 6px solid rgba(255, 255, 255, 0.1);
+      border-top-color: #00f2ea;
+      border-right-color: #ff0050;
+      animation: spin 1s linear infinite;
+      margin-bottom: 24px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .loading-sub {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 20px;
+      min-height: 1.4em;
+    }
+
+    .progress-bar {
+      width: 80%;
+      max-width: 360px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00f2ea, #ff0050);
+      transition: width 0.15s ease-out;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    /* Player screen */
+
+    .player-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .fake-header {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .fake-header-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .fake-header-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ff0050;
+      box-shadow: 0 0 10px rgba(255, 0, 80, 0.8);
+    }
+
+    .fake-header-right {
+      opacity: 0.75;
+    }
+
+    .phone-frame {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 9 / 16;
+      border-radius: 28px;
+      border: 2px solid rgba(255, 255, 255, 0.13);
+      background: #000;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 2;
+    }
+
+    .video-wrapper {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .player-hint {
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 480px) {
+      #app {
+        padding: 16px;
+      }
+      .logo-text-main {
+        font-size: 34px;
+      }
+      #startButton {
+        font-size: 20px;
+        padding: 14px 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <div id="app">
+    <!-- Landing Screen -->
+    <div id="landingScreen" class="screen active">
+      <div class="logo">
+        <div class="logo-icon">
+          <span>♫</span>
+        </div>
+        <div>
+          <div class="logo-text-main">
+            <span>Tik</span><span>Tok</span>
+          </div>
+          <div class="tagline">Not the real thing. Just a silly parody :)</div>
+        </div>
+      </div>
+
+      <button id="startButton">CLICK ME</button>
+
+      <div class="note">
+        By tapping, you agree to a <span>mysterious surprise</span>.
+      </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="screen">
+      <div class="spinner"></div>
+      <div class="loading-title">Loading TikTok 2.0...</div>
+      <div id="loadingMessage" class="loading-sub">Optimizing your For You Page...</div>
+
+      <div class="progress-bar">
+        <div id="progressInner" class="progress-inner"></div>
+      </div>
+      <div id="progressText" class="progress-text">0%</div>
+    </div>
+
+    <!-- Player Screen -->
+    <div id="playerScreen" class="screen">
+      <div class="player-wrapper">
+        <div class="fake-header">
+          <div class="fake-header-left">
+            <div class="fake-header-dot"></div>
+            <div>LIVE · For You</div>
+          </div>
+          <div class="fake-header-right">4G · 100% ▰</div>
+        </div>
+
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="video-wrapper">
+            <iframe
+              id="rickFrame"
+              src=""
+              title="Never Gonna Give You Up"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+
+        <div class="player-hint">
+          Tap anywhere or rotate your device for full chaos. To escape, just close the tab 😅
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Rickroll URL (embedded)
+    const RICK_URL = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0";
+
+    const landingScreen = document.getElementById("landingScreen");
+    const loadingScreen = document.getElementById("loadingScreen");
+    const playerScreen = document.getElementById("playerScreen");
+    const startButton = document.getElementById("startButton");
+    const loadingMessage = document.getElementById("loadingMessage");
+    const progressInner = document.getElementById("progressInner");
+    const progressText = document.getElementById("progressText");
+    const rickFrame = document.getElementById("rickFrame");
+
+    // Fun messages during loading
+    const loadingMessages = [
+      "Optimizing your For You Page...",
+      "Stealing your vibes...",
+      "Calculating how cringe you are...",
+      "Downloading infinite dances...",
+      "Adding 10,000 new filters...",
+      "Teaching the algorithm to judge you...",
+      "Buffering memes...",
+      "Almost there..."
+    ];
+
+    function setActiveScreen(screenEl) {
+      [landingScreen, loadingScreen, playerScreen].forEach(s => {
+        s.classList.remove("active");
+      });
+      screenEl.classList.add("active");
+    }
+
+    function requestFullscreenTrap() {
+      const el = document.documentElement;
+      const request =
+        el.requestFullscreen ||
+        el.webkitRequestFullscreen ||
+        el.mozRequestFullScreen ||
+        el.msRequestFullscreen;
+      if (request) {
+        try {
+          request.call(el);
+        } catch (e) {
+          // Ignore if browser blocks it
+        }
+      }
+    }
+
+    function startLoadingSequence() {
+      setActiveScreen(loadingScreen);
+      requestFullscreenTrap();
+
+      let progress = 0;
+      let messageIndex = 0;
+      loadingMessage.textContent = loadingMessages[0];
+
+      const interval = setInterval(() => {
+        const increment = Math.random() * 5 + 1; // 1–6%
+        progress = Math.min(100, progress + increment);
+
+        progressInner.style.width = progress.toFixed(0) + "%";
+        progressText.textContent = progress.toFixed(0) + "%";
+
+        // Change message every ~12-18%
+        if (progress > (messageIndex + 1) * (100 / (loadingMessages.length + 1)) && messageIndex < loadingMessages.length - 1) {
+          messageIndex++;
+          loadingMessage.textContent = loadingMessages[messageIndex];
+        }
+
+        // Finish
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            startRickroll();
+          }, 400);
+        }
+      }, 120);
+    }
+
+    function startRickroll() {
+      setActiveScreen(playerScreen);
+      // Load Rickroll video
+      rickFrame.src = RICK_URL;
+    }
+
+    startButton.addEventListener("click", () => {
+      startLoadingSequence();
+    });
+
+    // Tap anywhere in player screen -> try fullscreen again (mobile)
+    playerScreen.addEventListener("click", () => {
+      requestFullscreenTrap();
+    });
+
+    // Block right click
+    document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+
+    // Light dev-tool annoyances (can still be bypassed, just for the meme)
+    document.addEventListener("keydown", (e) => {
+      // F12
+      if (e.key === "F12") {
+        e.preventDefault();
+      }
+      // Ctrl+Shift+I / J / C / U
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) {
+        e.preventDefault();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toUpperCase() === "U") {
+        e.preventDefault();
+      }
+    });
+
+    // Tiny trick: keep history length the same to make back button slightly annoying
+    try {
+      history.pushState(null, "", location.href);
+      window.addEventListener("popstate", () => {
+        history.pushState(null, "", location.href);
+      });
+    } catch (e) {
+      // ignore if browser doesn't like it
+    }
+  </script>
+</body>
+</html>

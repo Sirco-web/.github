@@ -2,7 +2,7 @@
 
 Welcome to Sirco Web — a private organization focused on building high-quality custom web products. We create and maintain custom websites, game sites, statistics platforms, forums, and related web services. Nothing else.
 
-Organization: https://github.com/sirco-web/
+Organization: https://github.com/Sirco-web
 
 IMPORTANT: This is a private organization. Access to repositories, code, and internal resources is restricted and governed by our policies and license terms.
 
@@ -10,13 +10,13 @@ IMPORTANT: This is a private organization. Access to repositories, code, and int
 
 ## What we build
 
-- Custom websites
-- Game sites
-- Statistics platforms and dashboards
-- Forums and community platforms
+- Custom websites  
+- Game sites  
+- Statistics platforms and dashboards  
+- Forums and community platforms  
 - Integrations directly related to the above
 
-We do not offer unrelated services. Our scope is intentionally narrow and focused on the web products listed above.
+Our scope is intentionally narrow and focused on the web products listed above.
 
 ---
 
@@ -24,28 +24,35 @@ We do not offer unrelated services. Our scope is intentionally narrow and focuse
 
 DO NOT FORK OUR REPOSITORIES. Our repositories are private and access-controlled. Do not copy, clone, mirror, fork, or redistribute repository contents without express written permission.
 
-If you require access or integration for a Sirco Web product, contact our legal team (see below). Unauthorized use, distribution, or attempted circumvention of access controls is a breach of policy and may result in legal action.
+If you require access, integration, or a commercial license for any Sirco Web product, contact our legal or business teams (see contacts below). Unauthorized use, distribution, or attempted circumvention of access controls is a breach of policy and may result in legal action.
 
 ---
 
-## Organization statistics (public repositories only)
+## Business & partnerships
 
-Sirco Web is a private organization. The statistics below show aggregated public GitHub data only; private repositories and internal metrics are not shown.
+We engage in commercial collaborations, licensed integrations, and paid development work aligned with our core offerings (custom websites, game sites, statistics platforms, forums). For partnership inquiries, proposals, or to discuss a paid engagement, contact our business team at hello@sirco-web.com and include scope, timeline, and budget expectations.
 
-(If images fail to render, click through to the organization page. All statistics displayed exclude private repositories.)
+---
 
-- GitHub organization overview
-![Sirco Web GitHub stats](https://github-readme-stats.vercel.app/api?username=sirco-web&show_icons=true&theme=dark&hide=stars,prs)
+## Organization statistics (public data only / private org)
 
-- Top languages across public repositories
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=sirco-web&layout=compact&theme=dark)
+Below are the GitHub-stat badges for the organization (public data only). Because Sirco Web is a private organization, these services may show errors or "can't fetch" for private-repo metrics. If the badges do not render (or show "can't fetch"), it's because the badge services cannot access private repository data. We include them here per request; to produce private stats reliably, use an authorized internal workflow (see note below).
 
-- Public activity graph (public events only)  
-![Activity Graph](https://activity-graph.herokuapp.com/graph?username=sirco-web&theme=react-dark)
+<p align="center">
+  <i>Let's connect and create something awesome together!</i>
+</p>
 
-Notes:
-- These badges and graphs reflect public GitHub data only and automatically exclude private repositories and private activity.
-- Internal, private, or NDA-protected metrics and dashboards are maintained separately and provided only to authorized parties under appropriate agreements.
+<div align="center">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Sirco-web&layout=compact&langs_count=7&theme=midnight-purple" style="display:block; margin:auto;">
+</div>
+<div align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=Sirco-web&show_icons=true&theme=midnight-purple" width="400" style="display:block; margin:auto;">
+</div>
+<div align="center">
+  <img src="http://github-readme-streak-stats.herokuapp.com?user=Sirco-web&theme=midnight-purple" width="400" style="display:block; margin:auto;">
+</div>
+
+Note: If your organization has no public repositories or limited public activity, the images above may fail to fetch or show empty data. To generate private, authorized statistics that include private repositories, consider a scheduled GitHub Actions workflow that uses an organization-scoped token to aggregate metrics and render badges or internal dashboards.
 
 ---
 
@@ -117,14 +124,14 @@ Contact: legal@gace.space
 
 ## Reporting security issues or requesting access
 
-- For security vulnerabilities: DO NOT create a public issue. Contact legal@gace.space to report security issues privately.
-- For access requests: contact legal@gace.space with your request and justification. Access is granted only through authorized channels.
+- For security vulnerabilities: DO NOT create a public issue. Contact legal@gace.space to report security issues privately.  
+- For access or licensing requests: contact legal@gace.space with your request and justification. Access is granted only through authorized channels.
 
 ---
 
 ## Official channel
 
-- Organization: https://github.com/sirco-web/
+- Organization: https://github.com/Sirco-web
 
 ---
 

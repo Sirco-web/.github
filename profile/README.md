@@ -6,8 +6,6 @@ Organization: https://github.com/Sirco-web
 
 IMPORTANT: This is a private organization. Access to repositories, code, and internal resources is restricted and governed by our policies and license terms.
 
-![Sirco-web's GitHub Banner](https://raw.githubusercontent.com/Sirco-web/.github/main/banner.png)
-
 ---
 
 ## What we build
@@ -40,19 +38,7 @@ We engage in commercial collaborations, licensed integrations, and paid developm
 
 Below are the GitHub-stat badges for the organization (public data only). Because Sirco Web is a private organization, these services may show errors or "can't fetch" for private-repo metrics. If the badges do not render (or show "can't fetch"), it's because the badge services cannot access private repository data. We include them here per request; to produce private stats reliably, use an authorized internal workflow (see note below).
 
-<p align="center">
-  <i>Let's connect and create something awesome together!</i>
-</p>
-
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Sirco-web&layout=compact&langs_count=7&theme=midnight-purple" style="display:block; margin:auto;">
-</div>
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Sirco-web&show_icons=true&theme=midnight-purple" width="400" style="display:block; margin:auto;">
-</div>
-<div align="center">
-  <img src="http://github-readme-streak-stats.herokuapp.com?user=Sirco-web&theme=midnight-purple" width="400" style="display:block; margin:auto;">
-</div>
+![Sirco-web's GitHub Banner](https://raw.githubusercontent.com/Sirco-web/.github/main/banner.png)
 
 Note: If your organization has no public repositories or limited public activity, the images above may fail to fetch or show empty data. To generate private, authorized statistics that include private repositories, consider a scheduled GitHub Actions workflow that uses an organization-scoped token to aggregate metrics and render badges or internal dashboards.
 

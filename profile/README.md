@@ -6,6 +6,8 @@ Organization: https://github.com/Sirco-web
 
 IMPORTANT: This is a private organization. Access to repositories, code, and internal resources is restricted and governed by our policies and license terms.
 
+![Sirco-web's GitHub Banner](https://raw.githubusercontent.com/Sirco-web/.github/main/banner.png)
+
 ---
 
 ## What we build
